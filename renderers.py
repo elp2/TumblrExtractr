@@ -1,4 +1,6 @@
 import time
+from PIL import Image
+import os
 
 class Renderer(object):
     def __init__(self, post):
@@ -88,3 +90,33 @@ class TextRenderer(Renderer):
             html += u'<div class=text-title>' + self.post[u'title'] + u'</div>\n'
         html += u'<div class=text-body>' + self.post[u'body'] + u'</div>\n'
         return html
+
+class AlbumRenderer(Renderer):
+    def __init__(self, album):
+        self.images = []
+        self.title = album["title"]
+        self.path = album["path"]
+        for image_file in os.listdir(self.path):
+            img = self.make_image(image_file)
+            if None != img:
+                self.images.append(img)
+
+    def make_image(self, image_file):
+        try:
+            img = Image.open(self.path + "/" + image_file)
+        except IOError:
+            return None # not an image
+        width, height = img.size
+        return {'filename': image_file,
+                'width': width,
+                'height': height,
+        }
+
+    def render(self):
+        div = u'<div class=album>\n'
+        div += u'<div class=album-title>' + self.title + u'</div>\n'
+        for img in self.images:
+            src = unicode(self.path + "/" + img["filename"])
+            div += u'\t<img src="' + src + u'" width=100 height=100>\n'
+        div += u'</div>\n'
+        return div

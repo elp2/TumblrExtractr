@@ -1,4 +1,4 @@
-img {
+.post img {
     border-radius: 5px;
     -webkit-border-radius: 5px;
 }
@@ -156,6 +156,10 @@ p.quote-author:before {
     height: auto;
     line-height: 21px;
     width: auto;
+}
+
+.album-title {
+    font-size: 24px;
 }
 
 @media print
