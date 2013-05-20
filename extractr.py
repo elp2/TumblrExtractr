@@ -18,8 +18,6 @@ def get_renderer(post):
 
     return renderer
 
-
-
 def lister(client, count=sys.maxint, params={}):
     client.get_blog_posts()
 
@@ -37,14 +35,24 @@ def lister(client, count=sys.maxint, params={}):
                 raise StopIteration
             yield post
 
+def header(f):
+    f.write(u'<html>\n')
+    f.write(u'<head>')
+    f.write(u'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">')
+    f.write(u'<title>')
+    f.write(u'</title>')
+    f.write(u'</head>')
+    f.write(u'<body>')
 
-def main():
+def footer(f):
+    f.write(u'</body>\n</html>')
+
+def get_sorted_posts():
     # On OSX these can be set and made available via:
     # launchctl setenv TUMBLR_EXTRACTR_HOSTNAME yourtumblrblogname.tumblr.com
     hostname = os.environ['TUMBLR_EXTRACTR_HOSTNAME']
     consumer_key = os.environ['TUMBLR_EXTRACTR_CONSUMER_KEY']
     consumer_secret = os.environ['TUMBLR_EXTRACTR_CONSUMER_SECRET']
-
     access_key = 'ACCESS_KEY'
     access_secret = 'ACCESS_KEY'
 
@@ -54,18 +62,29 @@ def main():
     params = {
         #'type':'text'
     }
-
-    types = {}
-
-    f = codecs.open("output.html", "w", "utf-8")
     client = TumblrClient(hostname, consumer, token)
+
+    posts = []
     for post in lister(client, params=params):
         renderer = get_renderer(post)
-        f.write(renderer.render())
+        posts.append(renderer)
 
+    posts.sort()
+    return posts
 
+def write_posts(posts):
+    f = codecs.open("output.html", "w", "utf-8")
+    header(f)
+
+    for post in posts:
+        f.write(post.render())
+    footer(f)
     f.close()
 
+
+def main():
+    posts = get_sorted_posts()
+    write_posts(posts)
 
 if __name__ == '__main__':
     main()

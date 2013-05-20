@@ -1,12 +1,25 @@
-class Renderer:
+import time
+
+class Renderer(object):
     def __init__(self, post):
         self.post = post
 
+    def __lt__(self, other):
+        return self.time() < other.time()
+
+    def time(self):
+        timestamp = self.post[u'timestamp']
+        return time.gmtime(timestamp)
+
     def date(self):
-        # ELP: TODO Convert from UTC
-        return self.post[u'date']
+        t = self.time()
+        format = u'%d %B %Y'
+        formatted = time.strftime(format, t)
+        return formatted.lstrip(u'0')
+
     def header(self):
         header = u'<div class=post>\n'
+        header += u'<!--' + self.post[u'post_url'] + u'-->\n'
         header += u'<ul class=tags>\n'
         for tag in self.post[u'tags']:
             header += u'\t<li class=tag>' + tag + u'</li>\n'
@@ -52,8 +65,16 @@ class PhotoRenderer(Renderer):
 
 class QuoteRenderer(Renderer):
     def body(self):
-        return u'<h1>Quote</h1>\n'
+        html =  u''
+        html += u'<div class=quote-text>' + self.post[u'text'] + u'</div>\n'
+        html += u'<div class=quote-source>' + self.post[u'source'] + u'</div>\n'
+        return html
 
 class TextRenderer(Renderer):
     def body(self):
-        return u'<h1>TEXT!</h1>\n'
+        html = u''
+        title = self.post[u'title']
+        if None != title:
+            html += u'<h3 class=text-title>' + self.post[u'title'] + u'</h3>\n'
+        html += u'<div class=text-body>' + self.post[u'body'] + u'</div>\n'
+        return html
