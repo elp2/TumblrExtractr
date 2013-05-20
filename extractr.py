@@ -39,6 +39,7 @@ def header(f):
     f.write(u'<html>\n')
     f.write(u'<head>')
     f.write(u'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">')
+    f.write(u'<link rel="stylesheet" type="text/css" href="css/extractr.css">')
     f.write(u'<title>')
     f.write(u'</title>')
     f.write(u'</head>')
@@ -50,6 +51,7 @@ def footer(f):
 def get_sorted_posts():
     # On OSX these can be set and made available via:
     # launchctl setenv TUMBLR_EXTRACTR_HOSTNAME yourtumblrblogname.tumblr.com
+    # Get API Keys: http://www.tumblr.com/oauth/apps
     hostname = os.environ['TUMBLR_EXTRACTR_HOSTNAME']
     consumer_key = os.environ['TUMBLR_EXTRACTR_CONSUMER_KEY']
     consumer_secret = os.environ['TUMBLR_EXTRACTR_CONSUMER_SECRET']
@@ -65,7 +67,16 @@ def get_sorted_posts():
     client = TumblrClient(hostname, consumer, token)
 
     posts = []
+    seen_types = {u'text': 0,
+                  u'quote': 0,
+                  u'photo': 0
+    }
+
     for post in lister(client, params=params):
+        type = post[u'type']
+        #if seen_types[type] > 5:
+        #    continue
+        seen_types[type] += 1
         renderer = get_renderer(post)
         posts.append(renderer)
 
@@ -73,7 +84,7 @@ def get_sorted_posts():
     return posts
 
 def write_posts(posts):
-    f = codecs.open("output.html", "w", "utf-8")
+    f = codecs.open("output/output.html", "w", "utf-8")
     header(f)
 
     for post in posts:

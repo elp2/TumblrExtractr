@@ -1,0 +1,166 @@
+img {
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.text-title {
+    font-size: 24px;
+}
+
+.text-body {
+    box-sizing: border-box;
+    color: rgb(68, 68, 68);
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    line-height: 21px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    width: 900px;
+}
+
+.date {
+    font-family: Menlo, Monaco, 'Lucida Console', monospace;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+body {
+    font-family: Georgia, serif;
+    font-size: 13px;
+}
+
+blockquote:before {
+    content: '\201C';
+    position: absolute;
+    font-size: 36px;
+    line-height: 1;
+    color: #999999;
+    top: 13px;
+    left: -5px;
+    font-style: normal;
+}
+
+blockquote {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgb(248, 248, 248);
+    background-image: none;
+    background-origin: padding-box;
+    background-size: auto;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-left-color: rgb(68, 68, 68);
+    border-left-style: none;
+    border-left-width: 0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-sizing: border-box;
+    color: rgb(68, 68, 68);
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 24px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    position: relative;
+    width: 500px;
+}
+
+blockquote p {
+    box-sizing: border-box;
+    color: rgb(68, 68, 68);
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 24px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    width: 460px;
+}
+
+.quote-author {
+    box-sizing: border-box;
+    color: rgb(68, 68, 68);
+    display: inline;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    font-style: italic;
+    height: auto;
+    line-height: 21px;
+    width: 460px; /* before: auto - changed to match blockquote */
+}
+
+p.quote-author:before {
+    content: "\2014 \00a0";
+}
+
+.tag {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgb(238, 238, 238);
+    background-image: none;
+    background-origin: padding-box;
+    background-size: auto;
+    box-sizing: border-box;
+    color: rgb(153, 153, 153);
+    cursor: auto;
+    display: block;
+    float: left;
+    font-family: Menlo, Monaco, 'Lucida Console', monospace;
+    font-size: 10px;
+    height: 18px;
+    line-height: 10px;
+    margin-bottom: 2px;
+    margin-left: 0px;
+    margin-right: 2px;
+    margin-top: 0px;
+    outline-color: rgb(153, 153, 153);
+    outline-style: none;
+    outline-width: 0px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    text-decoration: none;
+}
+
+.tags {
+    box-sizing: border-box;
+    color: rgb(68, 68, 68);
+    display: inline;
+    font-family: Menlo, Monaco, 'Lucida Console', monospace;
+    font-size: 10px;
+    height: auto;
+    line-height: 21px;
+    width: auto;
+}
+
+@media print
+{
+    div{
+        page-break-inside: avoid;
+    }
+}
