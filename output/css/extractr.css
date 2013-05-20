@@ -159,12 +159,20 @@ p.quote-author:before {
 }
 
 .album-title {
-    font-size: 24px;
+    font-size: 36px;
+}
+
+.album {
+    width:900px;
 }
 
 @media print
 {
-    div{
+    .post{
         page-break-inside: avoid;
     }
+    .album{
+        page-break-inside: avoid;
+    }
+
 }

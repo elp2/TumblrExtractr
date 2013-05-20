@@ -1,3 +1,4 @@
 .idea/*
 *.pyc
 output/output.html
+output/.DS_Store

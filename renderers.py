@@ -113,10 +113,29 @@ class AlbumRenderer(Renderer):
         }
 
     def render(self):
-        div = u'<div class=album>\n'
+        #TODO HC dubai
+        id = unicode(self.title.replace (" ", "_"))
+        div = u'<div class=album id=' + id + u'>\n'
         div += u'<div class=album-title>' + self.title + u'</div>\n'
+
+        div += u'</div>\n'
+        div += u'<script>\n'
+        div += u'var photos = [\n'
+        first = True
         for img in self.images:
             src = unicode(self.path + "/" + img["filename"])
-            div += u'\t<img src="' + src + u'" width=100 height=100>\n'
-        div += u'</div>\n'
+            if not first:
+                div += u','
+            first = False
+            div += u'{thumbnail:"' + src + u'",width:' + unicode(img["width"]) + u',height:' + unicode(img["height"]) + u' }\n'
+        div += u'];\n'
+        div += u"var jg = new JGlance({ container: $('#" + id + u"'), \
+        photoErrorCallback: function (photo, img) { \
+            img.attr( 'src', '/path/to/placeholder.jpg' ).addClass( 'broken-image' ); \
+        } \
+    }); \
+// we pass the photos via 'push' method\n \
+jg.push( photos ); \
+                \
+               </script>\n"
         return div
