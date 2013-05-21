@@ -5,6 +5,7 @@ import os
 class Renderer(object):
     def __init__(self, post):
         self.post = post
+        self.id = post[u'id']
 
     def __lt__(self, other):
         return self.time() < other.time()
@@ -21,6 +22,7 @@ class Renderer(object):
 
     def header(self):
         header = u'<div class=post>\n'
+        header += u'<h1>' + unicode(self.post[u'id']) + u'</h1>\n'
         header += u'<!--' + self.post[u'post_url'] + u'-->\n'
         header += u'<span class=tags>\n'
         for tag in self.post[u'tags']:
@@ -68,8 +70,8 @@ class PhotoRenderer(Renderer):
     def body(self):
         body = u''
 
-        for photo in self.post[u'photos']:
-            body += self.render_photo(photo)
+        #for photo in self.post[u'photos']:
+        #    body += self.render_photo(photo)
 
         body += u'<div class=photo-caption>' + self.post[u'caption'] + u'</div>\n'
 
@@ -96,6 +98,7 @@ class AlbumRenderer(Renderer):
         self.images = []
         self.title = album["title"]
         self.path = album["path"]
+        self.id = self.title # give us a generic ID for comparison purposes
         for image_file in os.listdir(self.path):
             img = self.make_image(image_file)
             if None != img:
