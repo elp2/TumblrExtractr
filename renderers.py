@@ -18,16 +18,17 @@ class Renderer(object):
         t = self.time()
         format = u'%d %B, %Y'
         formatted = time.strftime(format, t)
-        return formatted.lstrip(u'0')
+        return formatted.lstrip(u'0') #+ u' - ' + unicode(self.post[u'timestamp'])
 
     def header(self):
         header = u'<div class=post>\n'
-        header += u'<h1>' + unicode(self.post[u'id']) + u'</h1>\n'
+        #header += u'<h1>' + unicode(self.post[u'id']) + u'</h1>\n'
         header += u'<!--' + self.post[u'post_url'] + u'-->\n'
         header += u'<span class=tags>\n'
         for tag in self.post[u'tags']:
             header += u'\t<div class=tag>' + tag + u'</div>\n'
         header += u'</span>\n'
+        header += u'<br/><br/>'
 
         header += u'<div class=date>' + self.date() + u'</div>\n'
 
@@ -37,7 +38,7 @@ class Renderer(object):
         return u'<h1>NOT IMPLEMENTED!</H1>\n'
 
     def footer(self):
-        return u'</div><hr>\n'
+        return u'<div class=footer></div></div>\n'
 
     def render(self):
         return self.header() + self.body() + self.footer()
@@ -53,11 +54,10 @@ class PhotoRenderer(Renderer):
         # scale large image size manually down to get better DPI when printing
         width = op[u'width']
         height = op[u'height']
-        if width >= 500:
-            print "height before: ", height
-            height /= (width/500.0)
-            print " = >height after: ", height, "\n"
-            width = 500
+        maxDim = 500.0
+        if height >= maxDim:
+            width /= (height/maxDim)
+            height = maxDim
 
         html += u' width="' + unicode(width) + u'" '
         html += u' height="' + unicode(height) + u'" '
@@ -70,8 +70,8 @@ class PhotoRenderer(Renderer):
     def body(self):
         body = u''
 
-        #for photo in self.post[u'photos']:
-        #    body += self.render_photo(photo)
+        for photo in self.post[u'photos']:
+            body += self.render_photo(photo)
 
         body += u'<div class=photo-caption>' + self.post[u'caption'] + u'</div>\n'
 
@@ -116,8 +116,7 @@ class AlbumRenderer(Renderer):
         }
 
     def render(self):
-        #TODO HC dubai
-        id = unicode(self.title.replace (" ", "_"))
+        id = unicode(self.path.split("/")[-1].replace (" ", "_"))
         div = u'<div class=album id=' + id + u'>\n'
         div += u'<div class=album-title>' + self.title + u'</div>\n'
 
@@ -141,4 +140,4 @@ class AlbumRenderer(Renderer):
 jg.push( photos ); \
                 \
                </script>\n"
-        return div
+        return div + self.footer()
