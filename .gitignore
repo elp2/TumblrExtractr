@@ -2,3 +2,5 @@
 *.pyc
 output/output.html
 output/.DS_Store
+extracted.json
+.DS_Store

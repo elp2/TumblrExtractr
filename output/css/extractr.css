@@ -147,6 +147,15 @@ p.quote-author:before {
     text-decoration: none;
 }
 
+.footer {
+    margin-top: 20px;
+    border-top-color: rgb(238, 238, 238);
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-sizing: border-box;
+    width: 700px;
+}
+
 .tags {
     box-sizing: border-box;
     color: rgb(68, 68, 68);
